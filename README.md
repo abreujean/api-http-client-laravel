@@ -1,61 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Consumo de API com Laravel HTTP Client
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Descrição do Projeto
+Implementação de um serviço Laravel para consumir a NewsAPI (API de notícias) utilizando o HTTP Client nativo do Laravel, conforme requisitos do teste técnico.
 
-## About Laravel
+## 🚀 Funcionalidades
+- Consulta de notícias por termo de busca
+- Listagem de manchetes por país
+- Filtragem de fontes por categoria e país
+- Tratamento de erros e respostas padronizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🔧 Pré-requisitos
+- PHP 8.0+
+- Composer
+- Laravel 12.x
+- Chave de API da NewsAPI (registre-se em [newsapi.org](https://newsapi.org/))
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠 Configuração
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Instalação
+```bash
+git clone https://github.com/abreujean/api-http-client-laravel
+cd api-http-client-laravel
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-## Learning Laravel
+### 2. Configuração da API
+Adicione sua chave da NewsAPI no arquivo `.env`:
+```env
+NEWS_API_KEY=sua_chave_aqui
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🌐 Endpoints da API
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Pesquisar Notícias
+```
+GET /api/news/search
+```
+**Parâmetros:**
+- `q`: Termo de busca (obrigatório)
+- `pageSize`: Quantidade de resultados (padrão: 10)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Exemplo:**
+```bash
+http://localhost:8000/api/news/search/bitcoins/10
+```
 
-## Laravel Sponsors
+### 2. Top Manchetes
+```
+GET /api/news/top-headlines
+```
+**Parâmetros:**
+- `country`: Código do país (2 letras, obrigatório)
+- `pageSize`: Quantidade de resultados (padrão: 10)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Exemplo:**
+```bash
+http://localhost:8000/api/news/top-headlines/us/10
+```
 
-### Premium Partners
+### 3. Fontes por Categoria
+```
+GET /api/news/sources
+```
+**Parâmetros:**
+- `category`: Categoria de notícias (obrigatório)
+- `country`: Código do país (2 letras, obrigatório)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**Exemplo:**
+```bash
+http://localhost:8000/api/news/sources/technology/us
+```
 
-## Contributing
+## 🧪 Testando a API
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Utilize o Postman para testar os endpoints:
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📦 Estrutura do Projeto
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   └── NewsController.php
+├── Services/
+│   └── NewsService.php
+config/
+routes/
+├── api.php
+```
 
-## Security Vulnerabilities
+## 🔒 Armazenamento Seguro
+- Credenciais armazenadas no arquivo `.env` (nunca commitado)
+- Chave de API injetada via variáveis de ambiente
+- Validação de parâmetros em todas as requisições
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🛡 Tratamento de Erros
+A API retorna respostas padronizadas:
+```json
+{
+    "success": false,
+    "error": "Mensagem de erro detalhada"
+}
+```
 
-## License
+Códigos de status HTTP:
+- 200: Sucesso
+- 400: Parâmetros inválidos
+- 502: Erro na comunicação com a NewsAPI
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📄 Documentação Adicional
+- Documentação da NewsAPI: [newsapi.org/docs](https://newsapi.org/docs)
+- Documentação do HTTP Client do Laravel: [laravel.com/docs/http-client](https://laravel.com/docs/http-client)
+
+## 👨‍💻 Autor
+Jean Abreu 
+jeandcabreu@gmail.com
