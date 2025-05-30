@@ -77,6 +77,9 @@ http://localhost:8000/api/news/sources/technology/us
 
 1. Utilize o Postman para testar os endpoints:
 
+![teste1](https://github.com/user-attachments/assets/684e4a91-9cf3-4412-b674-5611cf6c6fa6)
+![teste2](https://github.com/user-attachments/assets/022f72df-31fe-4876-8f7a-e283d2d6be8f)
+![teste3](https://github.com/user-attachments/assets/a9bae077-295c-43df-bce1-18ec7ebb1da4)
 
 ## 📦 Estrutura do Projeto
 ```
