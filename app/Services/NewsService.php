@@ -22,7 +22,7 @@ class NewsService
         try {
             return $this->newsApi->getEverything(
                 q: $query,
-                pageSize: $pageSize
+                page_size: $pageSize
             );
         } catch (\Exception $e) {
             Log::error('NewsAPI search error: ' . $e->getMessage());
@@ -35,10 +35,11 @@ class NewsService
      */
     public function topHeadlines(string $country, int $pageSize = 10)
     {
+
         try {
             return $this->newsApi->getTopHeadlines(
                 country: $country,
-                pageSize: $pageSize
+                page_size: $pageSize
             );
         } catch (\Exception $e) {
             Log::error('NewsAPI top headlines error: ' . $e->getMessage());

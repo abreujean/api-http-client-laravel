@@ -16,16 +16,11 @@ protected $newsService;
     /**
      * find new by term (q)
      */
-    public function search(Request $request)
+    public function search($q, $pageSize = 10)
     {
-        $request->validate([
-            'q' => 'required|string|min:2',
-            'pageSize' => 'sometimes|integer|min:1|max:100'
-        ]);
-
         $results = $this->newsService->searchNews(
-            $request->q,
-            $request->input('pageSize', 10)
+            $q,
+            $pageSize
         );
 
         return $this->apiResponse($results);
@@ -34,16 +29,11 @@ protected $newsService;
     /**
      * Top news by country (top-headlines)
      */
-    public function topHeadlines(Request $request)
+    public function topHeadlines($country, $pageSize = 10)
     {
-        $request->validate([
-            'country' => 'required|string|size:2',
-            'pageSize' => 'sometimes|integer|min:1|max:100'
-        ]);
-
         $results = $this->newsService->topHeadlines(
-            $request->country,
-            $request->input('pageSize', 10)
+            $country,
+            $pageSize
         );
 
         return $this->apiResponse($results);
@@ -52,16 +42,11 @@ protected $newsService;
     /**
      * Sources by category and country (top-headlines/sources)
      */
-    public function sources(Request $request)
+    public function sources($category, $country)
     {
-        $request->validate([
-            'category' => 'required|string',
-            'country' => 'required|string|size:2'
-        ]);
-
         $results = $this->newsService->sourcesByCategory(
-            $request->category,
-            $request->country
+            $category,
+            $country
         );
 
         return $this->apiResponse($results);
@@ -72,6 +57,7 @@ protected $newsService;
      */
     protected function apiResponse($data)
     {
+
         if (!$data) {
             return response()->json([
                 'message' => 'Falha ao buscar notícias',
