@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use jcobhams\NewsApi\NewsApi;
-use Illuminate\Support\Facades\Log;
 
 class NewsService
 {
@@ -25,7 +24,6 @@ class NewsService
                 page_size: $pageSize
             );
         } catch (\Exception $e) {
-            Log::error('NewsAPI search error: ' . $e->getMessage());
             return null;
         }
     }
@@ -42,7 +40,6 @@ class NewsService
                 page_size: $pageSize
             );
         } catch (\Exception $e) {
-            Log::error('NewsAPI top headlines error: ' . $e->getMessage());
             return null;
         }
     }
@@ -58,7 +55,6 @@ class NewsService
                 country: $country
             );
         } catch (\Exception $e) {
-            Log::error('NewsAPI sources error: ' . $e->getMessage());
             return null;
         }
     }
